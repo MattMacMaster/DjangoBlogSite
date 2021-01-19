@@ -5,7 +5,11 @@ from django.views.generic import ListView, DetailView, CreateView, UpdateView, D
 from django.contrib.auth.models import User
 from .models import Post
 
-# Create your views here.
+from django.contrib.auth import get_user_model
+
+User = get_user_model()
+
+# Currently Replaced by PostListView but kept in as example as method view
 
 
 def home(request):
@@ -37,23 +41,30 @@ class UserPostListView(ListView):
 class PostDetailView(DetailView):
     model = Post
 
+# Login mixin param, redirects you to login page if instance isnt found
+
 
 class PostCreateView(LoginRequiredMixin, CreateView):
     model = Post
     fields = ['title', 'content']
+    # Checking if the user is signed in as the post author to create then passes to form valid method
 
     def form_valid(self, form):
         form.instance.author = self.request.user
         return super().form_valid(form)
+
+# Login mixin param, redirects you to login page if instance isnt found, and passes test requirement from second mixin
 
 
 class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Post
     fields = ['title', 'content']
 
+    # Checking if the user is signed in as the post author to edit then passes to form valid method
     def form_valid(self, form):
         form.instance.author = self.request.user
         return super().form_valid(form)
+    # This is a check if the user is the author and proceeds if the test passes
 
     def test_func(self):
         post = self.get_object()
@@ -71,6 +82,8 @@ class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
         if self.request.user == post.author:
             return True
         return False
+
+#Legacy and removed
 
 
 def about(request):

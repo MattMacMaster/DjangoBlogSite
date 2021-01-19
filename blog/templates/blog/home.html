@@ -1,7 +1,11 @@
     {% extends "blog/base.html" %}
     {% block content %}
+    {% load static %}
+
+        <link rel="stylesheet" type="text/css" href="{% static 'blog/main.css' %}">
+
         {% for post in posts %}
-            <article class="media content-section">
+            <article class="media content-section scrollable">
             <img 
                 class="rounded-circle article-img"
                 src="{{ post.author.profile.image.url }}"
