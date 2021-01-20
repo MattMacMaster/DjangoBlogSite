@@ -1,7 +1,13 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from .forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm
+from django.contrib.auth import logout
+from django.contrib.auth import get_user_model
+
+
+from .forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm, DeleteUser
+
+User = get_user_model()
 
 
 def register(request):
@@ -17,6 +23,23 @@ def register(request):
     else:
         form = UserRegisterForm()
     return render(request, 'users/register.html', {'form': form})
+
+
+@login_required()
+def del_user(request):
+    messages.success(request, request.user.username)
+    if request.user.is_authenticated:
+        try:
+            u = User.objects.get(username=request.user.username)
+            u.delete()
+            messages.success(request, "The user is deleted")
+            logout(request)
+            return render(request, 'users/remove_user.html')
+
+        except Exception as e:
+            messages.warning(request, "Something Went Wrong")
+            return redirect('login')
+    return redirect('login')
 
 
 @login_required()
