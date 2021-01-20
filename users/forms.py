@@ -23,6 +23,13 @@ class UserUpdateForm(forms.ModelForm):
         fields = ['username', 'email']
 
 
+class DeleteUser(forms.ModelForm):
+
+    class Meta:
+        model = User
+        fields = ['username']
+
+
 class ProfileUpdateForm(forms.ModelForm):
     class Meta:
         model = Profile
