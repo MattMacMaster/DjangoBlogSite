@@ -21,6 +21,6 @@ Creating Posts you are required to be logged in or be redirected to the login pa
 
 Editing Posts can only be done once logged in but only posts that user has created
 
-Deleteing Posts occur on the update post page which then requires the author to logged in to do so
+Deleteing Posts occur on the update post page which then requires the author to logged in to do so to prevent mischief
 
 
