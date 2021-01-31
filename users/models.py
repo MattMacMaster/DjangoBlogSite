@@ -11,6 +11,12 @@ class CustomUser(AbstractUser):
     class Meta:
         db_table = 'auth_user'
 
+    def shortin_name(self):
+        if (len(self.username) > 20):
+            return f'{self.username[0:20]}...'
+        else:
+            return self.username
+
 
 class Profile(models.Model):
     user = models.OneToOneField(
