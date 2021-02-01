@@ -59,10 +59,11 @@ class PostCreateView(LoginRequiredMixin, CreateView):
 class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Post
     fields = ['title', 'content']
-
     # Checking if the user is signed in as the post author to edit then passes to form valid method
+
     def form_valid(self, form):
         form.instance.author = self.request.user
+        form.instance.edited = True
         return super().form_valid(form)
     # This is a check if the user is the author and proceeds if the test passes
 

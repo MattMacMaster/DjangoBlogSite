@@ -2,6 +2,9 @@
 Learning Django by building somethin with django
 
 # Setup
+Install Django
+Run server
+Install Dependencies
 
 # Technologies Used
 -HTML

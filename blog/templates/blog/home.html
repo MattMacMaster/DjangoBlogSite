@@ -13,6 +13,9 @@
                 {{ post.author.shortin_name }}
             </a>
             <small class="text-muted">{{ post.date_posted|date:"F d, Y" }}</small>
+            {% if post.edited %}
+            <small class="text-muted"> [Edited] </small>
+            {% endif %}
         </div>
         <h2><a class="article-title" href="{% url 'post-detail' post.id%}">{{ post.title }}</a></h2>
         <p class="article-content">{{ post.content }}</p>
