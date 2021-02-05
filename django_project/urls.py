@@ -18,17 +18,21 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
+from django.conf.urls import url
+
 from users import views as user_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('blog/', include('blog.urls')),
+    url(r'^oauth/', include('social_django.urls', namespace='social')),  # <--
     path('', include('blog.urls')),
     path('register/', user_views.register, name='register'),
     path('delete/', user_views.del_user, name='remove_user'),
     path('login/',
          auth_views.LoginView.as_view(template_name='users/login.html'),
-         name='login'),
+         name='login'
+         ),
     path('logout/',
          auth_views.LogoutView.as_view(template_name='users/logout.html'),
          name='logout'),
